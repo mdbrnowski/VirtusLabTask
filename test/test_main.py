@@ -38,3 +38,19 @@ class TestInnerJoin(unittest.TestCase):
         self.assertEqual(good_rows, rows)
 
 
+class TestOuterJoins(unittest.TestCase):
+    def test_left_join(self):
+        result = subprocess.run(['join', 'a.csv', 'b.csv', 'color', 'left'], capture_output=True)
+        self.assertEqual(0, result.returncode)
+        rows = set(result.stdout.decode('utf-8').strip().split())
+        with open('ab_left_join.csv') as answer:
+            good_rows = set(answer.read().strip().split())
+        self.assertEqual(good_rows, rows)
+
+    def test_right_join(self):
+        result = subprocess.run(['join', 'a.csv', 'b.csv', 'color', 'right'], capture_output=True)
+        self.assertEqual(0, result.returncode)
+        rows = set(result.stdout.decode('utf-8').strip().split())
+        with open('ab_right_join.csv') as answer:
+            good_rows = set(answer.read().strip().split())
+        self.assertEqual(good_rows, rows)
