@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import click
-from join.utils.join import join
+from join.utils.join import print_joined
 
 
 @click.command()
@@ -18,14 +18,11 @@ def main(file_1, file_2, column_name, join_type):
     with open(file_2) as f:
         headers_2 = f.readline().strip().split(',')
 
-    if join_type == 'right':
-        join_type = 'left'
-        file_1, file_2 = file_2, file_1
-
     if column_name not in headers_1 or column_name not in headers_2:
         raise click.BadParameter(message='COLUMN_NAME does not exist in one of the files.')
 
-    join(file_1, file_2, headers_1.index(column_name), headers_2.index(column_name), join_type)
+    print_joined(file_1, file_2, headers_1.index(column_name), headers_2.index(column_name), len(headers_1),
+                 len(headers_2), join_type)
 
 
 if __name__ == "__main__":
