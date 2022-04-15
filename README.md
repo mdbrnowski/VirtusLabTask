@@ -23,6 +23,15 @@ You can also redirect the program output to a file:
 join file_1.csv file_2.csv column_name > file_res.csv
 ```
 
+## Tests
+
+You can run the tests using
+```shell
+python -m unittest test_main.py
+```
+
+Note that you have to install the program first. The files containing the answers were generated using Microsoft Access.
+
 ## why I did it the way I did
 1. Inner join is default in SQL, so I think it's a good idea to make it default here as well.
 2. Assume that the resulting file size is of the same magnitude as the input files. Then `join` can easily be done in O(n*logn) (just sort the rows and search them binary). But since we have very limited memory, it seems to me that O(n^2) is the only solution. For this reason, I decided to simply iterate through both files using two nested loops.
